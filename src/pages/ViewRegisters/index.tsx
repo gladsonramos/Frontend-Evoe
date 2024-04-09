@@ -1,5 +1,4 @@
-import CheckboxTable from "../../components/TableViewRegister";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { Container, ContainerText, FlexContainer } from "./styles";
@@ -7,24 +6,37 @@ import { useNavigate } from "react-router-dom"
 import { userService } from "../../services";
 import { EditViewModal, DeleteViewModal, ViewModal } from "./utils";
 import Text from "../../components/Text";
+import CheckboxTable from "../../components/TableViewRegister";
 
+interface UserData {
+  _id: string;
+  nome: string;
+  sobrenome: string;
+  email: string;
+  repetirEmail: string;
+  telefone: string;
+  endereco: string;
+  preferenciasComunicacao: string;
+  sobreVoce: string;
+  senha: string;
+  repetirSenha: string;
+}
 
 function ViewRegister() {
-
     const navigate = useNavigate();
 
-    const [clickModal, setClickModal] = useState(false);
-    const [clickModalDelete, setClickModalDelete] = useState(false);
-    const [clickModalEdit, setClickModalEdit] = useState(false);
-    const [selectedItem, setSelectedItem] = useState<any>([]);
-    const [searchValue, setSearchValue] = useState("");
-    const [filteredData, setFilteredData] = useState<any[]>([]);
-    const [showMessage, setShowMessage] = useState('');
-    const [successModalOpen, setSuccessModalOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [loadingUsers, setLoadingUsers] = useState(true);
+    const [clickModal, setClickModal] = useState<boolean>(false);
+    const [clickModalDelete, setClickModalDelete] = useState<boolean>(false);
+    const [clickModalEdit, setClickModalEdit] = useState<boolean>(false);
+    const [selectedItem, setSelectedItem] = useState<UserData | null>(null);
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [filteredData, setFilteredData] = useState<UserData[]>([]);
+    const [showMessage, setShowMessage] = useState<string>('');
+    const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingUsers, setLoadingUsers] = useState<boolean>(true);
 
-    const fetchUsers: any = async () => {
+    const fetchUsers = useCallback(async () => {
         try {
             const response = await userService.getUsers();
             setFilteredData(response.data.sucess)
@@ -33,13 +45,13 @@ function ViewRegister() {
             setLoadingUsers(false)
             console.error('Erro ao buscar usuários:', error);
         }
-    };
+    }, []);
 
     useEffect(() => {
         fetchUsers();
-    }, [clickModalEdit, clickModalDelete]);
+    }, [fetchUsers, clickModalEdit, clickModalDelete]);
 
-    const handleViewClick = (item: any, props: any) => {
+    const handleViewClick = (item: UserData, props: string) => {
         setSelectedItem(item);
         if (props === "view") {
             setClickModal(true)
@@ -54,7 +66,7 @@ function ViewRegister() {
         if (searchValue.length === 0) {
             return fetchUsers();
         }
-        const filtered: any = filteredData.filter((item) =>
+        const filtered = filteredData.filter((item) =>
             item.nome.toLowerCase().includes(searchValue.toLowerCase())
         );
         setFilteredData(filtered);
@@ -64,20 +76,17 @@ function ViewRegister() {
         handleSearch();
     };
 
-    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, nameProps: any) => {
+    const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, nameProps: keyof UserData) => {
         const { value } = e.target;
-        if (nameProps === "repetirSenha") {
-            setSelectedItem((prev: any) =>
-                ({ ...prev, [nameProps]: value, repetirSenha: value }));
-        } else {
-            setSelectedItem((prev: any) =>
-                ({ ...prev, [nameProps]: value }));
-        }
-        // eslint-disable-next-line
-    }, [selectedItem]);
-
+        setSelectedItem((prev: any) => ({
+            ...prev,
+            [nameProps]: value
+        }));
+    }, []);
 
     const ClickButtonEdit = async () => {
+        if (!selectedItem) return;
+
         if (selectedItem.repetirSenha && selectedItem.senha !== selectedItem.repetirSenha) {
             alert("As senhas não coincidem");
             return;
@@ -99,6 +108,8 @@ function ViewRegister() {
     }
 
     const ClickButtonDelete = async () => {
+        if (!selectedItem) return;
+
         setLoading(true)
         try {
             const response: any = await userService.deletUser(selectedItem._id);
@@ -148,7 +159,7 @@ function ViewRegister() {
                     placeholder="Buscar"
                     icon={require("../../assets/SearchIcon.png")}
                     value={searchValue}
-                    onChange={(e: any) => setSearchValue(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
                 />
                 <Button
                     onClick={() => handleButtonClick()}>

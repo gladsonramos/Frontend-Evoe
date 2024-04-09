@@ -1,4 +1,4 @@
-
+import React from "react";
 import {
   ModalOverlay,
   CloseIcon,
@@ -6,9 +6,15 @@ import {
   Space
 } from "./styles";
 
-const Close = require('../../assets/CloseIcon.png')
+interface ModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  children?: React.ReactNode;
+}
 
-function Modal({ isOpen, onClose, children }: any) {
+const Close: string = require('../../assets/CloseIcon.png');
+
+function Modal({ isOpen, onClose, children }: ModalProps) {
   return (
     <>
       {isOpen && (

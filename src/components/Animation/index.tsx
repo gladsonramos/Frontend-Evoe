@@ -15,18 +15,17 @@ function LottieAnimation() {
             animationData: animationData 
         });
 
-        // Limpa a animação quando o componente for desmontado
         return () => anim.destroy();
     }, []);
 
 
     return (
         <div
-            style={{ position: 'absolute',  zIndex: -1 }} // Define a largura e altura para ocupar toda a tela e posiciona atrás do conteúdo
+            style={{ position: 'absolute',  zIndex: -1 }} 
         >
             <div
                 ref={animationContainer}
-                style={{ width: '100%', height: '100%' }} // Define a largura e altura para ocupar toda a tela
+                style={{ width: '100%', height: '100%' }}
             />
         </div>
     );
