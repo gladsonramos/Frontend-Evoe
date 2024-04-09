@@ -156,7 +156,7 @@ function ViewRegister() {
             />
             <FlexContainer>
                 <Input
-                    placeholder="Buscar"
+                    placeholder="Buscar..."
                     icon={require("../../assets/SearchIcon.png")}
                     value={searchValue}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
