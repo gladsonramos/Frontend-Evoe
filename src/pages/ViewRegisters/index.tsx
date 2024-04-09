@@ -66,12 +66,22 @@ function ViewRegister() {
 
     const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, nameProps: any) => {
         const { value } = e.target;
-        setSelectedItem((prev: any) => ({ ...prev, [nameProps]: value }));
+        if (nameProps === "repetirSenha") {
+            setSelectedItem((prev: any) =>
+                ({ ...prev, [nameProps]: value, repetirSenha: value }));
+        } else {
+            setSelectedItem((prev: any) =>
+                ({ ...prev, [nameProps]: value }));
+        }
         // eslint-disable-next-line
     }, [selectedItem]);
 
 
     const ClickButtonEdit = async () => {
+        if (selectedItem.repetirSenha && selectedItem.senha !== selectedItem.repetirSenha) {
+            alert("As senhas não coincidem");
+            return;
+        }
         setLoading(true)
         try {
             const response = await userService.editUser(selectedItem._id, selectedItem);
@@ -142,7 +152,7 @@ function ViewRegister() {
                 />
                 <Button
                     onClick={() => handleButtonClick()}>
-                    Search
+                    Pesquisar
                 </Button>
                 <Button
                     onClick={() => navigate('/register')}>

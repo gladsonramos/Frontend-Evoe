@@ -14,7 +14,7 @@ export const EditViewModal = ({ selectedItem,
     showMessage,
     successModalOpen,
     onClose,
-    loading}: any) => {
+    loading }: any) => {
 
     return (
         <Container>
@@ -46,10 +46,19 @@ export const EditViewModal = ({ selectedItem,
                         onChange={(e: any) => handleChange(e, "preferenciasComunicacao")}
                         TextLabel={"Preferências de comunicação"}
                         value={selectedItem?.preferenciasComunicacao} />
+                </FlexContainer>
+                <div style={{ height: 10 }} />
+                <FlexContainer>
                     <TextInput
+                        type="password"
                         onChange={(e: any) => handleChange(e, "senha")}
                         TextLabel={"Sua senha"}
                         value={selectedItem?.senha} />
+                    <TextInput
+                        type="password"
+                        onChange={(e: any) => handleChange(e, "repetirSenha")}
+                        TextLabel={"Confirme sua senha"}
+                        value={selectedItem?.repetirSenha || selectedItem?.senha} />
                 </FlexContainer>
                 <div style={{ height: 10 }} />
                 <FlexContainer>
