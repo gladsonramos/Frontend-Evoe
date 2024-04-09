@@ -155,6 +155,7 @@ export const ViewModal = ({ clickModal, setClickModal, selectedItem }: any) => {
                     TextLabel={"Preferências de comunicação"}
                     value={selectedItem?.preferenciasComunicacao} />
                 <TextInput
+                    type="password"
                     disabled
                     TextLabel={"Sua senha"}
                     value={selectedItem?.senha} />
