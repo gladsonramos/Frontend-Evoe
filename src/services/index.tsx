@@ -7,7 +7,6 @@ const BASE_URL = 'https://backend-app-evoe-2.onrender.com/';
 
 const api = axios.create({
     baseURL: BASE_URL,
-    timeout: 5000,
 });
 
 export const userService = {
