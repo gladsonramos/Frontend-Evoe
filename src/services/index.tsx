@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { UserData } from './types';
 
-const BASE_URL = 'https://backend-app-evoe-2.onrender.com/';
+const BASE_URL = 'http://15.229.232.35:3001/';
 
 const api = axios.create({
     baseURL: BASE_URL,

@@ -31,6 +31,7 @@ function ViewRegister() {
     const [selectedItem, setSelectedItem] = useState<UserData | null>(null);
     const [searchValue, setSearchValue] = useState<string>("");
     const [filteredData, setFilteredData] = useState<UserData[]>([]);
+    const [data, setData] = useState<UserData[]>([]);
     const [showMessage, setShowMessage] = useState<string>('');
     const [successModalOpen, setSuccessModalOpen] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -40,6 +41,7 @@ function ViewRegister() {
         try {
             const response = await userService.getUsers();
             setFilteredData(response.data.sucess)
+            setData(response.data.sucess)
             setLoadingUsers(false)
         } catch (error) {
             setLoadingUsers(false)
@@ -63,10 +65,7 @@ function ViewRegister() {
     };
 
     const handleSearch = () => {
-        if (searchValue.length === 0) {
-            return fetchUsers();
-        }
-        const filtered = filteredData.filter((item) =>
+        const filtered = data.filter((item) =>
             item.nome.toLowerCase().includes(searchValue.toLowerCase())
         );
         setFilteredData(filtered);
