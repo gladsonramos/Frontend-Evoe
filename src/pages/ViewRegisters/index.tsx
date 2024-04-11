@@ -9,17 +9,17 @@ import Text from "../../components/Text";
 import CheckboxTable from "../../components/TableViewRegister";
 
 interface UserData {
-  _id: string;
-  nome: string;
-  sobrenome: string;
-  email: string;
-  repetirEmail: string;
-  telefone: string;
-  endereco: string;
-  preferenciasComunicacao: string;
-  sobreVoce: string;
-  senha: string;
-  repetirSenha: string;
+    _id: string;
+    nome: string;
+    sobrenome: string;
+    email: string;
+    repetirEmail: string;
+    telefone: string;
+    endereco: string;
+    preferenciasComunicacao: string;
+    sobreVoce: string;
+    senha: string;
+    repetirSenha: string;
 }
 
 function ViewRegister() {
@@ -39,7 +39,8 @@ function ViewRegister() {
 
     const fetchUsers = useCallback(async () => {
         try {
-            const response = await userService.getUsers();
+            const response: any = await userService.getUsers();
+            console.log(response, 'res')
             setFilteredData(response.data.sucess)
             setData(response.data.sucess)
             setLoadingUsers(false)
