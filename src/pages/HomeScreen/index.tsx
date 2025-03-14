@@ -25,7 +25,7 @@ function HomeScreen() {
     return (
         <Container>
             <AnimatedBackground />
-            <Title>Seja bem vindo ao sistema de cadastro Evoé candes...</Title>
+            <Title>Seja bem vindo ao sistema MTA...</Title>
             <div style={{ height: 20 }} />
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
